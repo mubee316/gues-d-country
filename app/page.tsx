@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
-// Country data
 const countries = [
   { name: "Brazil", clues: ["This country is in South America.", "It's known for the Amazon Rainforest.", "The capital is Brasília."] },
   { name: "Japan", clues: ["This country is in Asia.", "Famous for sushi and cherry blossoms.", "Its capital is Tokyo."] },
@@ -28,8 +27,8 @@ const countries = [
   { name: "Greece", clues: ["This country is in Southern Europe.", "Known for its ancient ruins and the Olympic Games.", "The capital is Athens."] },
   { name: "Thailand", clues: ["This country is in Southeast Asia.", "Famous for its beaches, temples, and cuisine.", "The capital is Bangkok."] },
 ];
+type countries = { name: string; clues: string[] };
 
-// Function to randomize the answer options (1 correct, 2 incorrect)
 const getRandomCountries = (correctCountry, countries) => {
   const incorrectOptions = countries.filter(country => country.name !== correctCountry.name);
   const shuffledIncorrect = incorrectOptions.sort(() => 0.5 - Math.random()).slice(0, 2);
@@ -42,16 +41,14 @@ function GuessingGame() {
   const [clueIndex, setClueIndex] = useState(0);
   const [feedback, setFeedback] = useState("");
 
-  // Function to select a new country and set options
   const selectNewCountry = () => {
     const selectedCountry = countries[Math.floor(Math.random() * countries.length)];
     setCurrentCountry(selectedCountry);
     setClueIndex(0);
     setOptions(getRandomCountries(selectedCountry, countries));
-    setFeedback(""); // Reset feedback when changing country
+    setFeedback(""); 
   };
 
-  // Pick a random country and generate options when the component loads
   useEffect(() => {
     selectNewCountry();
   }, []);
@@ -59,7 +56,7 @@ function GuessingGame() {
   const checkAnswer = (selected) => {
     if (selected === currentCountry.name) {
       setFeedback("Correct!");
-      setTimeout(selectNewCountry, 1500); // Change country after 1.5 seconds
+      setTimeout(selectNewCountry, 1500);
     } else {
       setFeedback("Incorrect, try again!");
     }
